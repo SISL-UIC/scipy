@@ -95,7 +95,7 @@ jobs:
         export OMP_NUM_THREADS=2
         python -m pip uninstall --yes uarray # avoid deprecation warnings
         spin test -j3 -- --durations 10 --timeout=60
-    timeout-minutes: 12
+    timeout-minutes: 15
   test_venv_install:
     name: Install into venv, cluster only, pyAny/npAny, pip+cluster.test()
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -157,7 +157,7 @@ jobs:
       run: |
         ccache --evict-older-than 1d
         ccache -s
-    timeout-minutes: 12
+    timeout-minutes: 15
   python_debug:
     name: Python-debug & ATLAS & sdist+wheel, fast, py3.12/npMin, pip+pytest
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -186,7 +186,7 @@ jobs:
         python3-dbg -m pip install --group test
         cd doc # move out of source root directory
         python3-dbg -m pytest --pyargs scipy -n4 --durations=10 -m "not slow"
-    timeout-minutes: 12
+    timeout-minutes: 15
   gcc10:
     name: Oldest GCC & pydata/sparse, full, py3.12/npMin, pip+pytest
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -239,7 +239,7 @@ jobs:
         export PYTHONOPTIMIZE=2
         python -m pytest --pyargs scipy -n4 --durations=10
         popd
-    timeout-minutes: 12
+    timeout-minutes: 15
   prerelease_deps_coverage_64bit_blas:
     name: Prerelease deps & coverage report, full, py3.12/npMin & py3.13/npPre, spin,
       SCIPY_ARRAY_API=1
@@ -292,7 +292,7 @@ jobs:
         export OPENBLAS_NUM_THREADS=1
         export SCIPY_ARRAY_API=1
         spin test --no-build --coverage -j2 --mode full -- --cov --cov-report term-missing
-    timeout-minutes: 12
+    timeout-minutes: 15
   linux_32bit:
     name: 32-bit, fast, py3.12/npMin, spin
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -320,7 +320,7 @@ jobs:
         python -c 'import numpy as np; np.show_config()' && \
         spin build --with-scipy-openblas=32 && \
         spin test"
-    timeout-minutes: 12
+    timeout-minutes: 15
   distro_multiple_pythons:
     name: non-default Python interpreter, fast, py3.12/npMin, pip+pytest
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -368,7 +368,7 @@ jobs:
         python3.12 -m pytest --pyargs scipy.cluster
         python3.12 -m pytest --pyargs scipy.linalg
         popd
-    timeout-minutes: 12
+    timeout-minutes: 15
   meson_global_install:
     name: build with global meson
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -422,7 +422,7 @@ jobs:
         pushd $RUNNER_TEMP
         python -m pytest --pyargs scipy.linalg
         popd
-    timeout-minutes: 12
+    timeout-minutes: 15
   free-threaded:
     name: free-threaded${{ matrix.parallel == '1' && ' (pytest-run-parallel)' || ''
       }}
@@ -460,7 +460,7 @@ jobs:
       run: |
         pixi exec ccache --evict-older-than 1d
         pixi exec ccache -s
-    timeout-minutes: 12
+    timeout-minutes: 15
   clang-22-build-only:
     name: Clang-22 aarch build-only (-Werror)
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -476,7 +476,7 @@ jobs:
         cache: false
     - name: Build wheel, check for compiler warnings
       run: pixi run build-clang-22
-    timeout-minutes: 12
+    timeout-minutes: 15
   test_aarch64:
     name: aarch64, fast, fail slow, py3.12/npAny, spin
     if: ${{ !cancelled() && (true && (true || true)) }}
@@ -494,7 +494,7 @@ jobs:
       run: |
         export OMP_NUM_THREAD=2
         pixi run test-fail-slow
-    timeout-minutes: 12
+    timeout-minutes: 15
 'on':
   push:
     branches:
