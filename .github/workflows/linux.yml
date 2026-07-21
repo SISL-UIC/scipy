@@ -19,13 +19,9 @@ jobs:
       matrix:
         python-version:
         - '3.12'
-        - 3.15-dev
         maintenance-branch:
         - ${{ contains(github.ref, 'maintenance/') || contains(github.base_ref, 'maintenance/')
           }}
-        exclude:
-        - maintenance-branch: true
-          python-version: 3.15-dev
       fail-fast: false
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
