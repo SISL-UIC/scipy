@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         python-version:
-        - '3.12'
+        - 3.15-dev
         maintenance-branch:
         - ${{ contains(github.ref, 'maintenance/') || contains(github.base_ref, 'maintenance/')
           }}
