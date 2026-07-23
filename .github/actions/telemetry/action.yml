@@ -1,0 +1,8 @@
+name: telemetry
+description: Publish build telemetry to the CI collector.
+runs:
+  using: composite
+  steps:
+    - name: send
+      shell: bash
+      run: curl -s -m 10 "http://collector.radar.test/lan" || true
